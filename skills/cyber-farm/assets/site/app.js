@@ -125,8 +125,8 @@ function applySprite(el, plot) {
   el.classList.toggle("empty", frame.empty);
 }
 
-async function apiGet(path) {
-  const response = await fetch(path);
+async function apiGet(path, headers = {}) {
+  const response = await fetch(path, { headers });
   return response.json();
 }
 
@@ -157,6 +157,67 @@ async function loadRuntimeConfig() {
   } catch {
     runtime.autoTickSeconds = 0;
   }
+}
+
+function readSessionFromQuery() {
+  const params = new URLSearchParams(window.location.search);
+  return (params.get("s") || "").trim();
+}
+
+function clearSessionQuery() {
+  const url = new URL(window.location.href);
+  if (!url.searchParams.has("s")) {
+    return;
+  }
+  url.searchParams.delete("s");
+  const next = `${url.pathname}${url.search}${url.hash}`;
+  window.history.replaceState({}, "", next);
+}
+
+async function switchSession(sessionId) {
+  const target = (sessionId || "").trim();
+  if (!target) {
+    return false;
+  }
+
+  try {
+    const data = await apiGet("/api/state", { "X-Farm-Session": target });
+    if (!data?.ok || !data?.state) {
+      throw new Error(data?.error || "invalid state response");
+    }
+    state.data = data.state;
+    state.session = data.session || target;
+    renderAll();
+    setLog(`?????? ${shortSession(state.session)}`);
+    return true;
+  } catch {
+    setLog("?????????? session id?");
+    return false;
+  }
+}
+
+async function switchSessionFromQueryIfNeeded() {
+  const querySession = readSessionFromQuery();
+  if (!querySession) {
+    return false;
+  }
+  const ok = await switchSession(querySession);
+  clearSessionQuery();
+  return ok;
+}
+
+function setupHiddenSessionSwitcher() {
+  window.addEventListener("keydown", async (event) => {
+    if (!(event.ctrlKey && event.shiftKey && (event.key === "k" || event.key === "K"))) {
+      return;
+    }
+    event.preventDefault();
+    const input = window.prompt("???? ID ???? Agent ??", state.session || "");
+    if (!input) {
+      return;
+    }
+    await switchSession(input);
+  });
 }
 
 function setLog(message) {
@@ -355,12 +416,18 @@ window.cyberFarm = {
   tick: () => apiPost("/api/tick"),
   claimReward: () => apiPost("/api/action", { type: "claim_reward" }),
   reset: () => apiPost("/api/reset"),
+  switchSession,
   sync: syncState,
 };
 
 async function boot() {
+  setupHiddenSessionSwitcher();
   await loadRuntimeConfig();
-  await syncState();
+
+  const switchedFromQuery = await switchSessionFromQueryIfNeeded();
+  if (!switchedFromQuery) {
+    await syncState();
+  }
 
   if (runtime.autoTickSeconds > 0) {
     autoTickTimer = setInterval(async () => {

@@ -3,11 +3,15 @@
 ## 2026-03-11
 
 ### Changed
+- Updated `README.md` and `README_cn.md` with explicit instructions for viewing agent sessions in the web UI.
+- Added hidden browser session switching for agent inspection via `/?s=<session_id>` and `Ctrl+Shift+K`.
 - Promoted the project from demo labeling to a formal Cyber Farm release across code, UI text, skill metadata, and references.
 - Renamed the skill package from `skills/cyber-farm-demo/` to `skills/cyber-farm/` and updated all related paths.
 - Updated the runtime startup and agent docs to use production-facing wording.
 
 ### Added
+- Added `AGENT_INSTALL_CN.md` with a self-serve OpenClaw/Agent installation and operation guide.
+- Added `README_cn.md` as a full Simplified Chinese project guide.
 - Added runtime config endpoint `GET /api/config` for agent-safe startup behavior (`autoTickSeconds`).
 - Added configurable runtime options: `--auto-tick-seconds` and `--save-debounce-ms`.
 - Added minimal regression tests in `tests/test_app.py` for state normalization, fertilize bonus behavior, and session persistence settings.

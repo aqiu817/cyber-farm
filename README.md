@@ -107,6 +107,25 @@ Recommended startup flow:
 3. Store `session` and reuse it via `X-Farm-Session`
 4. Use returned `state` from each mutation response as source of truth
 
+
+## View Agent Sessions In Browser
+
+To inspect an Agent session in the web UI, use one of these hidden switch methods:
+
+1. URL switch (recommended)
+- Open: `http://127.0.0.1:4173/?s=<agent_session_id>`
+- The page will bind that session, then automatically remove `s` from the URL.
+
+2. Hidden shortcut switch
+- Focus the page and press `Ctrl+Shift+K`
+- Paste the Agent `session_id` in the prompt and confirm.
+
+Notes:
+
+- The top "session" badge should change after switching.
+- One browser profile holds one cookie session at a time.
+- Use different browsers or incognito windows to monitor multiple sessions in parallel.
+
 ## Development
 
 Syntax check:
