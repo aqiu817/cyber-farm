@@ -188,10 +188,10 @@ async function switchSession(sessionId) {
     state.data = data.state;
     state.session = data.session || target;
     renderAll();
-    setLog(`?????? ${shortSession(state.session)}`);
+    setLog(`Switched to session ${shortSession(state.session)}`);
     return true;
   } catch {
-    setLog("?????????? session id?");
+    setLog("Session switch failed. Please check the session id.");
     return false;
   }
 }
@@ -212,7 +212,7 @@ function setupHiddenSessionSwitcher() {
       return;
     }
     event.preventDefault();
-    const input = window.prompt("???? ID ???? Agent ??", state.session || "");
+    const input = window.prompt("Enter session ID to switch to an agent session", state.session || "");
     if (!input) {
       return;
     }

@@ -1,5 +1,7 @@
 ﻿# Cyber Farm
 
+> **Agent installation:** This repository provides an agent-oriented setup guide for OpenClaw and similar runtimes: [AGENT_INSTALL.md](./AGENT_INSTALL.md)
+
 [English](./README.md) | [简体中文](./README_cn.md)
 
 Cyber Farm is a lightweight farming game service with a browser UI and a JSON API for agents.

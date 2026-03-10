@@ -10,31 +10,10 @@ Cyber Farm 是一个轻量级农场游戏服务，提供浏览器 UI 和面向 A
 - 运行参数可配置（`--auto-tick-seconds`、`--save-debounce-ms`）
 - 使用 `unittest` 的最小回归测试
 
-## 项目结构
+## Agent 安装指南
 
-```text
-.
-├─ app.py
-├─ run.bat
-├─ run.sh
-├─ scripts/
-│  └─ serve-cyber-farm.ps1
-├─ skills/
-│  └─ cyber-farm/
-│     ├─ SKILL.md
-│     ├─ agents/openai.yaml
-│     ├─ assets/site/
-│     └─ references/
-├─ tests/
-│  └─ test_app.py
-└─ data/
-   └─ farm_sessions.json（运行时生成）
-```
-
-## 环境要求
-
-- Python 3.10+
-- Windows / macOS / Linux
+- OpenClaw / 通用 Agent 接入（中文）：[`AGENT_INSTALL_CN.md`](./AGENT_INSTALL_CN.md)
+- OpenClaw / General Agent onboarding (English): [`AGENT_INSTALL.md`](./AGENT_INSTALL.md)
 
 ## 快速开始
 
@@ -44,22 +23,10 @@ Cyber Farm 是一个轻量级农场游戏服务，提供浏览器 UI 和面向 A
 python .\app.py --host 0.0.0.0 --port 4173 --auto-tick-seconds 20 --save-debounce-ms 600
 ```
 
-或
-
-```powershell
-.\run.bat 4173
-```
-
 ### Linux/macOS
 
 ```bash
-python3 app.py --host 0.0.0.0 --port 4173 --auto-tick-seconds 20 --save-debounce-ms 600
-```
-
-或
-
-```bash
-./run.sh 4173
+python3 ./app.py --host 0.0.0.0 --port 4173 --auto-tick-seconds 20 --save-debounce-ms 600
 ```
 
 访问地址：
@@ -68,44 +35,23 @@ python3 app.py --host 0.0.0.0 --port 4173 --auto-tick-seconds 20 --save-debounce
 - API 状态：`http://127.0.0.1:4173/api/state`
 - 运行配置：`http://127.0.0.1:4173/api/config`
 
-## 运行参数
+## 在浏览器查看 Agent 会话
 
-- `--host`：绑定地址（默认 `0.0.0.0`）
-- `--port`：监听端口（默认 `4173`）
-- `--auto-tick-seconds`：前端自动推进间隔；`0` 表示关闭（默认 `20`）
-- `--save-debounce-ms`：会话写盘防抖时间（默认 `600`）
+可使用以下两种隐藏切换方式：
 
-## API 概览
+1. URL 参数切换（推荐）
+- 直接打开：`http://127.0.0.1:4173/?s=<agent_session_id>`
+- 页面会自动绑定该会话，然后把地址栏中的 `s` 参数清理掉。
 
-- `GET /api/health`
-- `GET /api/config`
-- `GET /api/state`
-- `POST /api/select`，请求体 `{ "plot": number }`
-- `POST /api/action`，支持：
-  - `plant`（带 `seed`）
-  - `water`
-  - `harvest`
-  - `clear`
-  - `buy`（带 `seed`）
-  - `sell`（带 `amount`）
-  - `fertilize`
-  - `upgrade_plot`
-  - `claim_reward`
-- `POST /api/tick`
-- `POST /api/reset`
+2. 隐藏快捷键切换
+- 聚焦页面后按 `Ctrl+Shift+K`
+- 在弹窗中粘贴 Agent 的 `session_id` 并确认。
 
-详细 API 文档：`skills/cyber-farm/references/api.md`
+说明：
 
-## Agent 接入
-
-对于 Agent（例如 OpenClaw），建议直接调用 API，而不是操作页面 DOM。
-
-推荐启动流程：
-
-1. 调用 `GET /api/config`
-2. 调用 `GET /api/state`
-3. 保存 `session`，后续通过 `X-Farm-Session` 复用
-4. 每次变更请求后，以返回的 `state` 作为最新事实来源
+- 切换成功后，页面顶部“会话”标识会变化。
+- 同一个浏览器配置文件同一时间只持有一个 cookie 会话。
+- 如需并行观察多个会话，建议使用不同浏览器或无痕窗口。
 
 ## 开发
 
@@ -121,28 +67,4 @@ python -m py_compile app.py
 python -m unittest tests/test_app.py -v
 ```
 
-## 许可证 / 素材归属
-
-代码遵循仓库策略。素材归属文件：
-
-- `skills/cyber-farm/assets/site/img/ATTRIBUTION.txt`
-- `skills/cyber-farm/assets/site/img/FONT_ATTRIBUTION.txt`
-
-## ?????? Agent ??
-
-???????? Agent ???????????????????
-
-1. URL ????????
-- ?????`http://127.0.0.1:4173/?s=<agent_session_id>`
-- ??????????????????? `s` ??????
-
-2. ???????
-- ?????? `Ctrl+Shift+K`
-- ?????? Agent ? `session_id` ????
-
-???
-
-- ????????????????????
-- ??????????????????? cookie ???
-- ??????????????????????????
-
+详细 API 文档：`skills/cyber-farm/references/api.md`
