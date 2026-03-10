@@ -2,11 +2,23 @@
 
 This guide is for OpenClaw or any HTTP-capable agent runtime to self-install, connect, and start operating Cyber Farm.
 
+## 0. Clone the repository first
+
+If the project is not already local, clone it before any setup:
+
+```bash
+git clone https://github.com/aqiu817/cyber-farm.git
+cd cyber-farm
+```
+
+Then continue with the steps below.
+
 ## 1. Prerequisites
 
+- Git
 - Python 3.10+
-- Project code available locally
 - Available port (default `4173`)
+
 
 ## 2. Start the service
 

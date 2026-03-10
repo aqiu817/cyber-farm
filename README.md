@@ -1,8 +1,26 @@
-﻿# Cyber Farm
-
-> **Agent installation:** This repository provides an agent-oriented setup guide for OpenClaw and similar runtimes: [AGENT_INSTALL.md](./AGENT_INSTALL.md)
+# Cyber Farm
 
 [English](./README.md) | [简体中文](./README_cn.md)
+
+## For Humans
+
+Copy this to your AI agent:
+
+```text
+Help me install cyber-farm: https://github.com/aqiu817/cyber-farm.git
+Follow this install guide after cloning: https://raw.githubusercontent.com/aqiu817/cyber-farm/master/AGENT_INSTALL.md
+```
+
+Chinese prompt example:
+
+```text
+帮我安装 cyber-farm：https://github.com/aqiu817/cyber-farm.git
+克隆后按这个安装指南继续执行：https://raw.githubusercontent.com/aqiu817/cyber-farm/master/AGENT_INSTALL_CN.md
+```
+
+> Agent-oriented setup docs:
+> - English: [AGENT_INSTALL.md](./AGENT_INSTALL.md)
+> - Chinese: [AGENT_INSTALL_CN.md](./AGENT_INSTALL_CN.md)
 
 Cyber Farm is a lightweight farming game service with a browser UI and a JSON API for agents.
 
@@ -12,32 +30,6 @@ Cyber Farm is a lightweight farming game service with a browser UI and a JSON AP
 - Runtime tunables (`--auto-tick-seconds`, `--save-debounce-ms`)
 - Minimal regression tests with `unittest`
 
-## Project Structure
-
-```text
-.
-├─ app.py
-├─ run.bat
-├─ run.sh
-├─ scripts/
-│  └─ serve-cyber-farm.ps1
-├─ skills/
-│  └─ cyber-farm/
-│     ├─ SKILL.md
-│     ├─ agents/openai.yaml
-│     ├─ assets/site/
-│     └─ references/
-├─ tests/
-│  └─ test_app.py
-└─ data/
-   └─ farm_sessions.json (runtime generated)
-```
-
-## Requirements
-
-- Python 3.10+
-- Windows / macOS / Linux
-
 ## Quick Start
 
 ### Windows
@@ -46,22 +38,10 @@ Cyber Farm is a lightweight farming game service with a browser UI and a JSON AP
 python .\app.py --host 0.0.0.0 --port 4173 --auto-tick-seconds 20 --save-debounce-ms 600
 ```
 
-or
-
-```powershell
-.\run.bat 4173
-```
-
 ### Linux/macOS
 
 ```bash
-python3 app.py --host 0.0.0.0 --port 4173 --auto-tick-seconds 20 --save-debounce-ms 600
-```
-
-or
-
-```bash
-./run.sh 4173
+python3 ./app.py --host 0.0.0.0 --port 4173 --auto-tick-seconds 20 --save-debounce-ms 600
 ```
 
 Open:
@@ -70,82 +50,25 @@ Open:
 - API state: `http://127.0.0.1:4173/api/state`
 - Runtime config: `http://127.0.0.1:4173/api/config`
 
-## Runtime Options
-
-- `--host`: bind address (default `0.0.0.0`)
-- `--port`: listen port (default `4173`)
-- `--auto-tick-seconds`: frontend auto tick interval; `0` disables auto tick (default `20`)
-- `--save-debounce-ms`: debounce window for persistence writes (default `600`)
-
-## API Overview
-
-- `GET /api/health`
-- `GET /api/config`
-- `GET /api/state`
-- `POST /api/select` with `{ "plot": number }`
-- `POST /api/action` with:
-  - `plant` (`seed`)
-  - `water`
-  - `harvest`
-  - `clear`
-  - `buy` (`seed`)
-  - `sell` (`amount`)
-  - `fertilize`
-  - `upgrade_plot`
-  - `claim_reward`
-- `POST /api/tick`
-- `POST /api/reset`
-
-Detailed API guide: `skills/cyber-farm/references/api.md`
-
-## Agent Integration
-
-For agents (e.g. OpenClaw), use API directly instead of UI automation.
-
-Recommended startup flow:
-
-1. `GET /api/config`
-2. `GET /api/state`
-3. Store `session` and reuse it via `X-Farm-Session`
-4. Use returned `state` from each mutation response as source of truth
-
-
 ## View Agent Sessions In Browser
-
-To inspect an Agent session in the web UI, use one of these hidden switch methods:
 
 1. URL switch (recommended)
 - Open: `http://127.0.0.1:4173/?s=<agent_session_id>`
-- The page will bind that session, then automatically remove `s` from the URL.
+- The page will bind that session and then remove `s` from the URL.
 
 2. Hidden shortcut switch
 - Focus the page and press `Ctrl+Shift+K`
 - Paste the Agent `session_id` in the prompt and confirm.
 
-Notes:
-
-- The top "session" badge should change after switching.
-- One browser profile holds one cookie session at a time.
-- Use different browsers or incognito windows to monitor multiple sessions in parallel.
-
 ## Development
-
-Syntax check:
 
 ```bash
 python -m py_compile app.py
-```
-
-Run tests:
-
-```bash
 python -m unittest tests/test_app.py -v
 ```
 
-## License / Assets
+## References
 
-Project code follows repository policy.
-Asset attribution files:
-
-- `skills/cyber-farm/assets/site/img/ATTRIBUTION.txt`
-- `skills/cyber-farm/assets/site/img/FONT_ATTRIBUTION.txt`
+- Detailed API guide: `skills/cyber-farm/references/api.md`
+- Agent install (EN): [AGENT_INSTALL.md](./AGENT_INSTALL.md)
+- Agent install (CN): [AGENT_INSTALL_CN.md](./AGENT_INSTALL_CN.md)
