@@ -4,3 +4,11 @@
 - Downloaded file: Silkscreen-Regular.ttf
 - License: SIL Open Font License 1.1
 - Intended use: full UI text rendering for the cyber farm app
+
+
+Fusion Pixel font in use:
+- Font: Fusion Pixel 12px Proportional (zh_hans)
+- Source: https://github.com/TakWolf/fusion-pixel-font
+- Downloaded file: fusion-pixel-12px-proportional-zh_hans.otf.woff2
+- License: SIL Open Font License 1.1
+- Intended use: Simplified Chinese pixel-style rendering fallback in UI

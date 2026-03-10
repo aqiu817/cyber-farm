@@ -1,4 +1,12 @@
 ﻿@font-face {
+  font-family: "FusionPixelZH";
+  src: url("./img/fusion-pixel/fusion-pixel-12px-proportional-zh_hans.otf.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "SilkscreenLocal";
   src: url("./img/Silkscreen-Regular.ttf") format("truetype");
   font-weight: 400;
@@ -27,7 +35,7 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--ink);
-  font-family: "SilkscreenLocal", "Microsoft YaHei", monospace;
+  font-family: "SilkscreenLocal", "FusionPixelZH", "Microsoft YaHei", monospace;
   letter-spacing: 0.02em;
   background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom) 34%, #b7de80 34%, #7fb55a 100%);
   transition: background 220ms ease;
