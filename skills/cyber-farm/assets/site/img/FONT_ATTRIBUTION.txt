@@ -1,0 +1,6 @@
+﻿Silkscreen font in use:
+- Font: Silkscreen Regular
+- Source: https://github.com/google/fonts/tree/main/ofl/silkscreen
+- Downloaded file: Silkscreen-Regular.ttf
+- License: SIL Open Font License 1.1
+- Intended use: full UI text rendering for the cyber farm app

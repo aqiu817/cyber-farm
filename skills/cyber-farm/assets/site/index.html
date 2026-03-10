@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>赛博农场 | Cyber Farm</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="sky"></div>
+    <div class="weather-fx" id="weatherFx"></div>
+    <main class="game-shell">
+      <header class="topbar card">
+        <div>
+          <p class="chip" id="dayChip">Neo Valley / Day 09</p>
+          <h1>赛博农场</h1>
+        </div>
+        <div class="top-stats">
+          <article>
+            <span>金币</span>
+            <strong id="coins">248</strong>
+          </article>
+          <article>
+            <span>能量</span>
+            <strong id="energy">72</strong>
+          </article>
+          <article>
+            <span>水位</span>
+            <strong id="water">68%</strong>
+          </article>
+        </div>
+      </header>
+
+      <section class="status-ribbon card">
+        <div>
+          <span class="ribbon-label">会话</span>
+          <strong id="sessionId">loading</strong>
+        </div>
+        <div>
+          <span class="ribbon-label">天气</span>
+          <strong id="weatherLabel">晴朗</strong>
+        </div>
+        <div>
+          <span class="ribbon-label">时间槽</span>
+          <strong id="timeSlot">1 / 4</strong>
+        </div>
+      </section>
+
+      <section class="playfield">
+        <section class="farm card">
+          <div class="section-head">
+            <div>
+              <p class="chip">主农田</p>
+              <h2>16 格作物区</h2>
+            </div>
+            <div class="weather">
+              <span>天气</span>
+              <strong id="weatherBox">晴朗</strong>
+              <em id="weatherHint">适合稳步生长</em>
+            </div>
+          </div>
+
+          <div class="farm-grid" id="farmGrid" aria-label="farm grid"></div>
+
+          <div class="toolbar">
+            <button id="waterBtn">给选中地块浇水</button>
+            <button id="harvestBtn" class="ghost">收获选中地块</button>
+            <button id="clearBtn" class="ghost">清理空地</button>
+            <button id="tickBtn" class="ghost">推进一轮时间</button>
+          </div>
+        </section>
+
+        <aside class="sidebar">
+          <section class="card side-panel">
+            <div class="section-head compact">
+              <div>
+                <p class="chip">每日任务</p>
+                <h2>任务与奖励</h2>
+              </div>
+            </div>
+            <div class="mission-card">
+              <div class="mission-row">
+                <span>今日目标</span>
+                <strong id="missionLabel">播种</strong>
+              </div>
+              <div class="mission-row">
+                <span>当前进度</span>
+                <strong id="missionProgress">0 / 1</strong>
+              </div>
+              <div class="mission-row">
+                <span>奖励</span>
+                <strong id="missionReward">18 金币 / 6 能量</strong>
+              </div>
+              <div class="mission-bar">
+                <div class="mission-fill" id="missionFill"></div>
+              </div>
+              <button id="claimRewardBtn">领取奖励</button>
+            </div>
+          </section>
+
+          <section class="card side-panel">
+            <div class="section-head compact">
+              <div>
+                <p class="chip">地块操作</p>
+                <h2>当前选中</h2>
+              </div>
+            </div>
+            <div class="selected-plot" id="selectedPlotCard">
+              <div class="selected-art">
+                <div id="selectedCropSprite" class="crop-sprite large"></div>
+              </div>
+              <div class="selected-meta">
+                <strong id="selectedPlotName">1号地</strong>
+                <p id="selectedPlotDesc">请选择一块地开始操作。</p>
+                <div class="selected-stats">
+                  <span id="selectedStage">状态: 生长</span>
+                  <span id="selectedMoisture">湿度: 70%</span>
+                  <span id="selectedGrowth">阶段: 2 / 4</span>
+                  <span id="selectedSoil">土地等级: Lv.1</span>
+                  <span id="selectedBoost">加成: 无</span>
+                </div>
+              </div>
+            </div>
+            <div class="seed-panel">
+              <p class="chip">播种流程</p>
+              <div class="seed-row">
+                <button class="seed-btn" data-seed="turnip">萝卜种子</button>
+                <button class="seed-btn" data-seed="tomato">番茄种子</button>
+                <button class="seed-btn" data-seed="melon">甜瓜种子</button>
+                <button class="seed-btn" data-seed="corn">玉米种子</button>
+              </div>
+            </div>
+            <div class="upgrade-panel">
+              <p class="chip">土地养成</p>
+              <div class="shop-actions">
+                <button id="fertilizeBtn">施肥 +1 生长</button>
+                <button id="upgradePlotBtn" class="ghost">升级土地</button>
+              </div>
+              <p class="tiny-note">升级土地会提升保水与收成，施肥会加速下一次成长。</p>
+            </div>
+            <p class="log" id="log">点击任意地块进行选中，再决定播种、浇水或收获。</p>
+          </section>
+
+          <section class="card side-panel">
+            <div class="section-head compact">
+              <div>
+                <p class="chip">农务面板</p>
+                <h2>今日进度</h2>
+              </div>
+            </div>
+            <div class="status-list">
+              <article>
+                <span>成熟作物</span>
+                <strong id="ripeCount">5</strong>
+              </article>
+              <article>
+                <span>仓库库存</span>
+                <strong id="crops">9</strong>
+              </article>
+              <article>
+                <span>空闲地块</span>
+                <strong id="emptyCount">2</strong>
+              </article>
+            </div>
+          </section>
+
+          <section class="card side-panel shop-panel">
+            <div class="section-head compact">
+              <div>
+                <p class="chip">仓库与商店</p>
+                <h2>交易中心</h2>
+              </div>
+            </div>
+            <div class="warehouse-row">
+              <article>
+                <span>仓库作物</span>
+                <strong id="warehouseCount">9</strong>
+              </article>
+              <article>
+                <span>单次售价</span>
+                <strong id="sellPriceEach">12 金币</strong>
+              </article>
+            </div>
+            <div class="warehouse-row market-row">
+              <article>
+                <span>当前季节</span>
+                <strong id="seasonLabel">秋季</strong>
+              </article>
+              <article>
+                <span>市场倍率</span>
+                <strong id="marketRate">x1.00</strong>
+              </article>
+            </div>
+            <div class="shop-actions">
+              <button id="sellOneBtn">卖出 1 箱</button>
+              <button id="sellAllBtn" class="ghost">全部卖出</button>
+            </div>
+            <div class="shop-actions seed-shop">
+              <button id="buyTurnipBtn" class="seed-btn">买萝卜种子</button>
+              <button id="buyTomatoBtn" class="seed-btn">买番茄种子</button>
+              <button id="buyMelonBtn" class="seed-btn">买甜瓜种子</button>
+              <button id="buyCornBtn" class="seed-btn">买玉米种子</button>
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="inventory card">
+        <div class="section-head compact">
+          <div>
+            <p class="chip">背包</p>
+            <h2>常用道具</h2>
+          </div>
+        </div>
+        <div class="inventory-row">
+          <article class="bag-item active"><span>锄头</span><strong>Lv.2</strong></article>
+          <article class="bag-item"><span>水壶</span><strong>18</strong></article>
+          <article class="bag-item"><span>萝卜种子</span><strong id="bagTurnip">8</strong></article>
+          <article class="bag-item"><span>番茄种子</span><strong id="bagTomato">6</strong></article>
+          <article class="bag-item"><span>甜瓜种子</span><strong id="bagMelon">5</strong></article>
+          <article class="bag-item"><span>玉米种子</span><strong id="bagCorn">6</strong></article>
+        </div>
+      </section>
+
+      <footer class="footer-hints card">
+        <span>快捷序列: 选地 -> 播种 -> 施肥/浇水 -> 收获</span>
+        <span>Agent: 优先使用 JSON API，而不是 DOM 点击</span>
+        <span>应季作物 + 高级土地 = 更高收成与更稳保水</span>
+      </footer>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

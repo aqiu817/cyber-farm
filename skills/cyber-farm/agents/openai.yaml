@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "Cyber Farm"
+  short_description: "Operate a multi-session cyber farm through a browser UI or JSON API."
+  default_prompt: "Use $cyber-farm. Start from /api/config and /api/state, keep one session id, and operate the farm through /api/select, /api/action, /api/tick, /api/reset using returned JSON state as the source of truth."
+
+policy:
+  allow_implicit_invocation: true

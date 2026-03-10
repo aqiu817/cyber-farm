@@ -1,0 +1,11 @@
+﻿OpenGameArt asset in use:
+- Farming crops 16x16 by josehzz
+- Source: https://opengameart.org/content/farming-crops-16x16
+- Downloaded file: FarmingCrops16x16.zip
+- License: CC0 1.0 Universal
+- Credit is appreciated by the artist but not required
+
+Current usage in this project:
+- Crop_Spritesheet.png is used as the in-game crop spritesheet
+- Implemented crops: turnip, tomato, melon, corn
+- Growth stages use the spritesheet columns directly in CSS/JS
